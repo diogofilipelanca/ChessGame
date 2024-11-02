@@ -4,16 +4,25 @@ namespace ChessGame
 {
     class Player
     {
+
+        #region Variables
+
         public string? name { get; set;}
         public int? vitorias {get; set;} = 0;
         public int? derrotas { get; set;} = 0;
         public int? jogos {get; set;} = 0;
 
+        #endregion
+
+        #region Static Variables
 
         protected static string file = "players.json";
 
         public static List<Player> listplayers = new List<Player>();
 
+        #endregion
+
+        #region Functions
 
         public static void RegisterPlayer(string name)
         {
@@ -48,5 +57,7 @@ namespace ChessGame
                 }
             }
         }
+
+        #endregion
     }
 }

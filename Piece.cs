@@ -1,19 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace ChessGame {
 
-namespace ChessGame {
+    #region Classes
+
     public class Piece {
-        public int X { get; set; }
-        public int Y { get; set; }
+
+        #region Variables
+
+        public Position position = new Position();
         public Team Team { get; set; }
         public PieceType PieceType { get; set; }
 
+        #endregion
+
+        #region Constructors
+
         public Piece(int x, int y, Team team, PieceType pieceType) {
-            this.X = x;
-            this.Y = y;
-            this.Team = team;
-            this.PieceType = pieceType;
+            position.x = x;
+            position.y = y;
+            Team = team;
+            PieceType = pieceType;
         }
+
+        #endregion
+
+        #region Functions
 
         public string GetIcon() {
             return (Team == Team.White) ? GetWhiteIcon() : GetBlackIcon();
@@ -42,7 +52,18 @@ namespace ChessGame {
                 _ => "."
             };
         }
+
+        #endregion
     }
+
+    public class Position() {
+        public int x { get; set; } = 0;
+        public int y { get; set; }
+    }
+
+    #endregion
+
+    #region Enums
 
     public enum Team {
         White,
@@ -57,14 +78,6 @@ namespace ChessGame {
         Queen,
         King
     }
+
+    #endregion
 }
-
-/*private void CalculateMoves(int rookx, int rooky) {
-            List<string> moves = new List<string>();
-
-            for (char x = 'a'; x < 'i'; x++) {
-                if (rookx != x) {
-                    moves.Add($"{x}{rooky}");
-                }
-            }
-            Console.WriteLine(moves);*/

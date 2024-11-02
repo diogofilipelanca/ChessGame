@@ -43,7 +43,7 @@ void Command()
                 break;
             case "Load":
                 Game loadgame = new Game();
-                //loadgame.LoadGame();
+                loadgame.LoadGame();
                 break;
         }
     } while (command.ToUpper() != "EXIT");

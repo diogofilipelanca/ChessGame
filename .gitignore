@@ -1,1 +1,9 @@
-[Bb]in
+bin/
+obj/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+/bin
+/obj

@@ -50,10 +50,14 @@ namespace ChessGame
 
         public static void LoadPlayersList() {
             if (listplayers.Count == 0){
-                string json = File.ReadAllText(file);
-                if (json != string.Empty){
-                    var jsonBody = JsonSerializer.Deserialize<List<Player>>(json);
-                    listplayers.AddRange(jsonBody);
+                if (File.Exists(file)) {
+                    string json = File.ReadAllText(file);
+                    if (json != string.Empty){
+                        var jsonBody = JsonSerializer.Deserialize<List<Player>>(json);
+                        listplayers.AddRange(jsonBody);
+                    }
+                } else {
+                    File.CreateText(file);
                 }
             }
         }

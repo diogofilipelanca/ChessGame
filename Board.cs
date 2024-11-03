@@ -24,8 +24,8 @@
             }
         }
         private void InitializePieces(Team team) {
-            int row = (team == Team.White) ? 0 : 7;
-            int pawnRow = (team == Team.White) ? 1 : 6;
+            int row = (team == Team.White) ? 7 : 0;
+            int pawnRow = (team == Team.White) ? 6 : 1;
 
             board[row, 0] = new Piece(0, row, team, PieceType.Rook);
             board[row, 7] = new Piece(7, row, team, PieceType.Rook);
@@ -45,7 +45,7 @@
         }
         public void DrawBoard(Piece[,] board)
         {
-            Console.WriteLine("  a b c d e f g h");
+            Console.WriteLine("  A B C D E F G H");
             Console.WriteLine(" +-----------------+");
             for (int row = 0; row < 8; row++)
             {
@@ -57,7 +57,7 @@
                 Console.WriteLine("| " + (8 - row));
             }
             Console.WriteLine(" +-----------------+");
-            Console.WriteLine("  a b c d e f g h \n\n");
+            Console.WriteLine("  A B C D E F G H \n\n");
         }
 
         #endregion

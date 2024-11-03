@@ -102,6 +102,14 @@ namespace ChessGame {
                 player2 = jsonBody?.player2;
                 this.board.board = board;
 
+                for (int row = 0; row < 8; row++) {
+                    for (int col = 0; col < 8; col++) {
+                        if (board[row, col] == null) {
+                            board[row, col] = null;
+                        }
+                    }
+                }
+
                 Console.Clear();
 
                 this.board.DrawBoard(board);
@@ -143,23 +151,83 @@ namespace ChessGame {
         }
 
         private void MovePiece(string actualPosition, string toPosition) {
-            Position piecePosition = DecodePosition(actualPosition);
-            Piece piece = GetPieceFromPosition(piecePosition.x, piecePosition.y);
+            actualPosition = actualPosition.Trim();
 
-            switch (piece.PieceType) {
-                case PieceType.Pawn:
-                    break;
+            Position piecePosition = new Position() {
+                x = DecodePosition(actualPosition[0]),
+                y = DecodePosition(actualPosition[1])
+            };
+
+            Piece piece;
+
+            if((piece = board.board[piecePosition.y, piecePosition.x]) != null) {
+                List<Position> possibleMoves = new List<Position>();
+
+                switch (piece.PieceType) {
+                    case PieceType.Pawn:
+                        if(piece.Team == Team.White) {
+                            for (int i = piece.position.y - 1; i >= 0; i--) {
+
+                                Position pos = new Position() {
+                                    x = piece.position.x,
+                                    y = i
+                                };
+
+                                possibleMoves.Add(pos);
+                            }
+                        } else {
+                            for (int i = piece.position.y + 1; i <= 8; i++) {
+
+                                Position pos = new Position() {
+                                    x = piece.position.x,
+                                    y = i
+                                };
+
+                                possibleMoves.Add(pos);
+                            }
+                        }
+                        
+                        break;
+                }
+
+                toPosition = toPosition.Trim();
+                Position pieceToPosition = new Position() {
+                    x = DecodePosition(toPosition[0]),
+                    y = DecodePosition(toPosition[1])
+                };
+
+                possibleMoves.ForEach(move => {
+                    if (move.x == pieceToPosition.x && move.y == pieceToPosition.y) {
+                        board.board[pieceToPosition.y, pieceToPosition.x] = piece;
+                        board.board[piece.position.y, piece.position.x] = null;
+                        piece.position = pieceToPosition;
+
+                        Console.Clear();
+                        board.DrawBoard(board.board);
+                    }
+                });
             }
         }
 
-        private Piece GetPieceFromPosition(int x, int y) {
-            return null;
-        }
-
-        private Position DecodePosition(string actualPosition) {
-            actualPosition = actualPosition.Trim();
-
-            return null;
+        private int DecodePosition(char actualPosition) {
+            return actualPosition switch {
+                'A' => 0,
+                'B' => 1,
+                'C' => 2,
+                'D' => 3,
+                'E' => 4,
+                'F' => 5,
+                'G' => 6,
+                'H' => 7,
+                '1' => 7,
+                '2' => 6,
+                '3' => 5,
+                '4' => 4,
+                '5' => 3,
+                '6' => 2,
+                '7' => 1,
+                '8' => 0
+            };
         }
 
         #endregion

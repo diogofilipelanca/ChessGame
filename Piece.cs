@@ -31,24 +31,24 @@
 
         private string GetWhiteIcon() {
             return PieceType switch {
-                PieceType.Pawn => "♙",
-                PieceType.Rook => "♖",
-                PieceType.Knight => "♘",
-                PieceType.Bishop => "♗",
-                PieceType.Queen => "♕",
-                PieceType.King => "♔",
-                _ => "."
-            };
-        }
-
-        private string GetBlackIcon() {
-            return PieceType switch {
                 PieceType.Pawn => "♟",
                 PieceType.Rook => "♜",
                 PieceType.Knight => "♞",
                 PieceType.Bishop => "♝",
                 PieceType.Queen => "♛",
                 PieceType.King => "♚",
+                _ => "."
+            };
+        }
+
+        private string GetBlackIcon() {
+            return PieceType switch {
+                PieceType.Pawn => "♙",
+                PieceType.Rook => "♖",
+                PieceType.Knight => "♘",
+                PieceType.Bishop => "♗",
+                PieceType.Queen => "♕",
+                PieceType.King => "♔",
                 _ => "."
             };
         }

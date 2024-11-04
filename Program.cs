@@ -33,7 +33,6 @@ void Command()
             case "RJ":
                 Player.RegisterPlayer(words[1]);
                 break;
-
             case "LJ":
                 Player.ShowAllPlayers();
                 break;

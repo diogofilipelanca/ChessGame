@@ -149,16 +149,13 @@ namespace ChessGame {
                 }
             } while (move != "Exit");
         }
-
         private void MovePiece(string actualPosition, string toPosition) {
-            actualPosition = actualPosition.Trim();
+            Piece piece;
 
             Position piecePosition = new Position() {
                 x = DecodePosition(actualPosition[0]),
                 y = DecodePosition(actualPosition[1])
             };
-
-            Piece piece;
 
             if((piece = board.board[piecePosition.y, piecePosition.x]) != null) {
                 List<Position> possibleMoves = new List<Position>();
@@ -166,49 +163,121 @@ namespace ChessGame {
                 switch (piece.PieceType) {
                     case PieceType.Pawn:
                         if(piece.Team == Team.White) {
-                            for (int i = piece.position.y - 1; i >= 0; i--) {
+                            piecePosition.y--;
+                            possibleMoves.Add(piecePosition);
+                        } else {
+                            piecePosition.y++;
+                            possibleMoves.Add(piecePosition);
+                        }
+                        break;
+                    //------------------------------------------------------------//
+                    case PieceType.Rook:
+                        if (piece.Team == Team.White) {
+                            for (int i = 7; i >= 0; i--) {
 
                                 Position pos = new Position() {
                                     x = piece.position.x,
                                     y = i
                                 };
 
-                                possibleMoves.Add(pos);
+                                if (pos.x != piece.position.x || pos.y != piece.position.y) {
+                                    Piece IsTherePiece;
+                                    if ((IsTherePiece = board.board[pos.y, pos.x]) != null) {
+                                        if(IsTherePiece.Team != piece.Team) {
+                                            possibleMoves.Add(pos);
+                                        } else {
+                                            break;
+                                        }
+                                    } else {
+                                        possibleMoves.Add(pos);
+                                    }
+                                }
+                            }
+
+                            for (int i = 0; i <= 7; i++) {
+
+                                Position pos = new Position() {
+                                    x = i,
+                                    y = piece.position.y
+                                };
+
+                                if (pos.x != piece.position.x || pos.y != piece.position.y) {
+                                    Piece IsTherePiece;
+                                    if ((IsTherePiece = board.board[pos.y, pos.x]) != null) {
+                                        if (IsTherePiece.Team != piece.Team) {
+                                            possibleMoves.Add(pos);
+                                        } else {
+                                            break;
+                                        }
+                                    } else {
+                                        possibleMoves.Add(pos);
+                                    }
+                                }
                             }
                         } else {
-                            for (int i = piece.position.y + 1; i <= 8; i++) {
+                            for (int i = 0; i <= 7; i++) {
 
                                 Position pos = new Position() {
                                     x = piece.position.x,
                                     y = i
                                 };
 
-                                possibleMoves.Add(pos);
+                                if (pos.x != piece.position.x || pos.y != piece.position.y) {
+                                    Piece IsTherePiece;
+                                    if ((IsTherePiece = board.board[pos.y, pos.x]) != null) {
+                                        if (IsTherePiece.Team != piece.Team) {
+                                            possibleMoves.Add(pos);
+                                        } else {
+                                            break;
+                                        }
+                                    } else {
+                                        possibleMoves.Add(pos);
+                                    }
+                                }
+                            }
+
+                            for (int i = 0; i <= 7; i++) {
+
+                                Position pos = new Position() {
+                                    x = i,
+                                    y = piece.position.y
+                                };
+
+                                if (pos.x != piece.position.x || pos.y != piece.position.y) {
+                                    Piece IsTherePiece;
+                                    if ((IsTherePiece = board.board[pos.y, pos.x]) != null) {
+                                        if (IsTherePiece.Team != piece.Team) {
+                                            possibleMoves.Add(pos);
+                                        } else {
+                                            break;
+                                        }
+                                    } else {
+                                        possibleMoves.Add(pos);
+                                    }
+                                }
                             }
                         }
-                        
                         break;
                 }
 
-                toPosition = toPosition.Trim();
                 Position pieceToPosition = new Position() {
                     x = DecodePosition(toPosition[0]),
                     y = DecodePosition(toPosition[1])
                 };
 
-                possibleMoves.ForEach(move => {
-                    if (move.x == pieceToPosition.x && move.y == pieceToPosition.y) {
-                        board.board[pieceToPosition.y, pieceToPosition.x] = piece;
-                        board.board[piece.position.y, piece.position.x] = null;
-                        piece.position = pieceToPosition;
+                Position posToMove;
+                if((posToMove = possibleMoves.Find(move => move.x == pieceToPosition.x && move.y == pieceToPosition.y)) != null) {
+                    board.board[pieceToPosition.y, pieceToPosition.x] = piece;
+                    board.board[piece.position.y, piece.position.x] = null;
+                    piece.position = pieceToPosition;
 
-                        Console.Clear();
-                        board.DrawBoard(board.board);
-                    }
-                });
+                    Console.Clear();
+                    board.DrawBoard(board.board);
+                } else {
+                    Console.WriteLine("\nJogada Impossível!");
+                }
             }
         }
-
         private int DecodePosition(char actualPosition) {
             return actualPosition switch {
                 'A' => 0,

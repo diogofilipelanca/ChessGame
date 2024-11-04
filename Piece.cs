@@ -57,7 +57,7 @@
     }
 
     public class Position() {
-        public int x { get; set; } = 0;
+        public int x { get; set; }
         public int y { get; set; }
     }
 

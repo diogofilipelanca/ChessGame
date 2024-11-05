@@ -258,6 +258,32 @@ namespace ChessGame {
                             }
                         }
                         break;
+                    //------------------------------------------------------------//
+                    case PieceType.Knight:
+                        if (piece.Team == Team.White) {
+                            if((piece.position.y + 2 >= 0 && piece.position.y + 2 <=7) && ( piece.position.x + 1 >= 0 && piece.position.x + 1 <= 7)) {
+                                if (board.board[piece.position.y + 2, piece.position.x + 1].Team != Team.White) {
+                                    Position pos = new Position() {
+                                        x = piece.position.x + 1,
+                                        y = piece.position.y + 2
+                                    };
+                                    possibleMoves.Add(pos);
+                                }
+                            }
+
+                            if ((piece.position.y + 2 >= 0 && piece.position.y + 2 <= 7) && (piece.position.x + 1 >= 0 && piece.position.x + 1 <= 7)) {
+                                if (board.board[piece.position.y + 2, piece.position.x - 1].Team != Team.White) {
+                                    Position pos = new Position() {
+                                        x = piece.position.x - 1,
+                                        y = piece.position.y + 2
+                                    };
+                                    possibleMoves.Add(pos);
+                                }
+                            }
+                        } else {
+                            
+                        }
+                        break;
                 }
 
                 Position pieceToPosition = new Position() {
